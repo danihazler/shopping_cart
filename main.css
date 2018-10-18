@@ -1,7 +1,7 @@
 :root {
   --color-white: #f4f4f4;
   --color-gray-light: #d1d1d1;
-  --color-black: #222;  
+  --color-black: #222;
   --color-primary: #3184d1;
   --color-primary-light: #a9d0f5;
   --color-danger: #e90000;
@@ -17,7 +17,7 @@
 @media screen and (min-width: 600px) {
   :root {
     --base-padding: 12px;
-    font-size: 14px; 
+    font-size: 14px;
   }
 }
 
@@ -54,7 +54,7 @@ body {
   .main-container { grid-template-columns: 5fr 3fr }
 }
 
-.section {
+.wrap-column {
   display: flex;
   flex-direction: column;
   max-height: 100vh;
@@ -123,20 +123,20 @@ button {
 
 /* ----------------- Products ----------------- */
 
-.products {
+#products {
   display: grid;
   grid-gap: var(--base-padding);
   overflow: auto;
 }
 
 @media screen and (min-width: 600px) {
-  .products {
+  #products {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media screen and (min-width: 1000px) {
-  .products {
+  #products {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -177,7 +177,7 @@ button {
   }
   50% {
     transform: rotate(10deg);
-  }  
+  }
   75% {
     transform: rotate(-10deg);
   }
@@ -203,7 +203,7 @@ button {
   display: grid;
   grid-template-columns: 2rem 7rem 3rem auto 1rem auto auto;
   justify-content: space-between;
-  align-items: center;  
+  align-items: center;
   text-align: center;
   padding: var(--base-padding);
   border: 2px dashed var(--color-gray-light);
