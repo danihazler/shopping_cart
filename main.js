@@ -72,6 +72,25 @@ addToCartButtonsDOM.forEach(addToCartButtonsDOM => {
             }
           });
         });
+        /* ***** DECREASE PRODUCT QTY (IN THE CART) ****** */
+        cartItemDOM.querySelector('[data-action="DECREASE_ITEM"]').addEventListener('click', () => {
+          cart.forEach(cartItem => {
+            if (cartItem.name === product.name) {
+              if (cartItem.quantity > 1) {
+                cartItemDOM.querySelector('.cart__item__quantity').innerText = --cartItem.quantity;
+              } else {
+                // add a class that contains an animation to the element
+                cartItemDOM.classList.add('cart__item--removed');
+                /* if qty is less than 1, it'll be deleted from the cart DOM,
+                and a delay was added due to the animation added */
+                setTimeout(() => cartItemDOM.remove(), 250);
+                // here deletes from the cart array
+                cart = cart.filter(cartItem => cartItem.name !== product.name);
+                addToCartButtonsDOM.innerText = "Add To Cart";
+              }
+            }
+          });
+        });
       }
     });
   }
