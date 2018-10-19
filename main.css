@@ -152,7 +152,7 @@ button {
 }
 
 .product__price:before {
-  content: '$';
+  content: '£';
 }
 
 .product__image {
@@ -246,7 +246,7 @@ button {
 }
 
 .cart__item__price:before {
-  content: '$';
+  content: '£';
 }
 
 .cart-footer {

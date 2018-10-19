@@ -50,6 +50,7 @@ addToCartButtonsDOM.forEach(addToCartButtonsDOM => {
 
       cart.push(product);
       handleButtonsActions(addToCartButtonsDOM, product);
+      getTotal();
     }
   });
 });
@@ -91,6 +92,7 @@ function increaseItems(product, cartItemDOM) {
     if (cartItem.name === product.name) {
       cartItemDOM.querySelector('.cart__item__quantity').innerText = ++cartItem.quantity;
     }
+    getTotal();
   });
 }
 
@@ -103,6 +105,7 @@ function decreaseItems(product, cartItemDOM, addToCartButtonDOM) {
         removeItems(product, cartItemDOM, addToCartButtonDOM) ;
       }
     }
+    getTotal();
   });
 }
 
@@ -111,4 +114,21 @@ function removeItems(product, cartItemDOM, addToCartButtonDOM) {
   setTimeout(() => cartItemDOM.remove(), 250);
   cart = cart.filter(cartItem => cartItem.name !== product.name);
   addToCartButtonDOM.innerText = "Add To Cart";
+  getTotal();
+}
+
+function getTotal(){
+  let grandTotal = document.getElementById("cart__total");
+  const grandTotalValue = [];
+
+  for (let i = 0; i < cart.length; i++) {
+    let pseudoTotal = cart[i].price * cart[i].quantity;
+    cart[i].total = pseudoTotal;
+    grandTotalValue.push(pseudoTotal);
+    grandTotal.innerHTML = grandTotalValue.reduce((a, b) => a + b, 0).toFixed(2);
+  }
+
+  if (cart.length < 1) {
+    grandTotal.innerHTML = 0;
+  }
 }
