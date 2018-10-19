@@ -70,54 +70,45 @@ function insertItemToDOM(product) {
   );
 }
 
-function handleButtonsActions(addToCartButtonsDOM, product) {
-  addToCartButtonsDOM.innerText = 'In Cart';
+function handleButtonsActions(addToCartButtonDOM, product) {
+  addToCartButtonDOM.innerText = 'In Cart';
 
   const cartItemsDOM = cartDOM.querySelectorAll('.cart__item');
   cartItemsDOM.forEach(cartItemDOM => {
     if (cartItemDOM.querySelector('.cart__item__name').innerText === product.name) {
 
-      cartItemDOM.querySelector('[data-action="INCREASE_ITEM"]').addEventListener('click', () => {
-        cart.forEach(cartItem => {
-          if (cartItem.name === product.name) {
-            cartItemDOM.querySelector('.cart__item__quantity').innerText = ++cartItem.quantity;
-          }
-        });
-      });
+      cartItemDOM.querySelector('[data-action="INCREASE_ITEM"]').addEventListener('click', () => increaseItems(product, cartItemDOM));
 
-      cartItemDOM.querySelector('[data-action="DECREASE_ITEM"]').addEventListener('click', () => {
-        cart.forEach(cartItem => {
-          if (cartItem.name === product.name) {
-            if (cartItem.quantity > 1) {
-              cartItemDOM.querySelector('.cart__item__quantity').innerText = --cartItem.quantity;
-            } else {
-              // add a class that contains an animation to the element
-              cartItemDOM.classList.add('cart__item--removed');
-              /* if qty is less than 1, it'll be deleted from the cart DOM,
-              and a delay was added due to the animation added */
-              setTimeout(() => cartItemDOM.remove(), 250);
-              // here deletes from the cart array
-              cart = cart.filter(cartItem => cartItem.name !== product.name);
-              addToCartButtonsDOM.innerText = "Add To Cart";
-            }
-          }
-        });
-      });
+      cartItemDOM.querySelector('[data-action="DECREASE_ITEM"]').addEventListener('click', () => decreaseItems(product, cartItemDOM, addToCartButtonDOM));
 
-      cartItemDOM.querySelector('[data-action="REMOVE_ITEM"]').addEventListener('click', () => {
-        cart.forEach(cartItem => {
-          if (cartItem.name === product.name) {
-            // add a class that contains an animation to the element
-            cartItemDOM.classList.add('cart__item--removed');
-            /* if qty is less than 1, it'll be deleted from the cart DOM,
-            and a delay was added due to the animation added */
-            setTimeout(() => cartItemDOM.remove(), 250);
-            // here deletes from the cart array
-            cart = cart.filter(cartItem => cartItem.name !== product.name);
-            addToCartButtonsDOM.innerText = "Add To Cart";
-          }
-        });
-      });
+      cartItemDOM.querySelector('[data-action="REMOVE_ITEM"]').addEventListener('click', () => removeItems(product, cartItemDOM, addToCartButtonDOM));
     }
   });
+}
+
+function increaseItems(product, cartItemDOM) {
+  cart.forEach(cartItem => {
+    if (cartItem.name === product.name) {
+      cartItemDOM.querySelector('.cart__item__quantity').innerText = ++cartItem.quantity;
+    }
+  });
+}
+
+function decreaseItems(product, cartItemDOM, addToCartButtonDOM) {
+  cart.forEach(cartItem => {
+    if (cartItem.name === product.name) {
+      if (cartItem.quantity > 1) {
+        cartItemDOM.querySelector('.cart__item__quantity').innerText = --cartItem.quantity;
+      } else {
+        removeItems(product, cartItemDOM, addToCartButtonDOM) ;
+      }
+    }
+  });
+}
+
+function removeItems(product, cartItemDOM, addToCartButtonDOM) {
+  cartItemDOM.classList.add('cart__item--removed');
+  setTimeout(() => cartItemDOM.remove(), 250);
+  cart = cart.filter(cartItem => cartItem.name !== product.name);
+  addToCartButtonDOM.innerText = "Add To Cart";
 }
